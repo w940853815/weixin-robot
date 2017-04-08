@@ -8,6 +8,10 @@ import logging
 import time
 from app import app
 from flask import request,render_template
+import urllib
+import urllib2
+import json
+
 
 class Rec_Msg(object):
     def __init__(self, xmlData):
@@ -78,6 +82,39 @@ class Reply_ImageMsg(Reply_Msg):
         </xml>
         """
 
+def parse_xml(web_data):
+    if len(web_data) == 0:
+        return None
+    xmlData = ET.fromstring(web_data)
+    msg_type = xmlData.find('MsgType').text
+    if msg_type == 'text':
+        return Rec_TextMsg(xmlData)
+    elif msg_type == 'image':
+        return Rec_ImageMsg(xmlData)
+
+        return XmlForm.format(**self.__dict)
+
+
+def parse_content(rec_msg):
+
+    api_url = 'http://www.tuling123.com/openapi/api'
+
+    values = {
+        'key'    : 'b74a80570b614b8d971a91b00ce027af',
+        'info': rec_msg.Content,
+        'userid': rec_msg.FromUserName
+    }
+
+    data = urllib.urlencode(values)  # 编码工作
+    req = urllib2.Request(api_url, data)  # 发送请求同时传data表单
+    response = urllib2.urlopen(req)  # 接受反馈的信息
+    res_data_str = response.read()  # 读取反馈的内容
+    res_data_dict = json.loads(res_data_str)
+    if res_data_dict['code'] == 100000:
+        return res_data_dict
+    else:
+        return u'对不起，我可能生病了，暂时无法回答你的问题'
+
 
 @app.route("/")
 def home():
@@ -110,20 +147,8 @@ def verify_server():
         if isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text':
             to_user = rec_msg.FromUserName
             from_user = rec_msg.ToUserName
-            content = rec_msg.Content
-            replyMsg = Reply_TextMsg(to_user, from_user, content)
+            content = parse_content(rec_msg)
+            replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'))
             return replyMsg.send()
 
 
-
-def parse_xml(web_data):
-    if len(web_data) == 0:
-        return None
-    xmlData = ET.fromstring(web_data)
-    msg_type = xmlData.find('MsgType').text
-    if msg_type == 'text':
-        return Rec_TextMsg(xmlData)
-    elif msg_type == 'image':
-        return Rec_ImageMsg(xmlData)
-
-        return XmlForm.format(**self.__dict)
