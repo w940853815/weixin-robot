@@ -152,10 +152,6 @@ def parse_content(rec_msg):
         return u'对不起，我可能生病了，暂时无法回答你的问题'
 
 
-@app.route("/")
-def home():
-    return render_template('home.html')
-
 
 '''获取token只用于验证开发者服务器'''
 @app.route('/wx', methods=['GET','POST'])

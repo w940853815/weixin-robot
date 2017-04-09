@@ -8,6 +8,7 @@ from flask import Flask
 from flask.json import JSONEncoder
 from flask_sqlalchemy import SQLAlchemy
 from tornado.options import options, define, parse_command_line
+from flask_adminlte import AdminLTE
 
 app = Flask(__name__)
 define('port', type=int, default=80)
@@ -21,6 +22,7 @@ app.config.from_object('config_web')
 
 
 db = SQLAlchemy(app)
+AdminLTE(app)
 
 class CustomJSONEncoder(JSONEncoder):
     """This class adds support for lazy translation texts to Flask's
@@ -51,5 +53,5 @@ if not app.debug:
     app.logger.info('microblog startup')
 
 
-from app import rest , model  #使rest.py文件中的路由生效
+from app import rest , model ,view  #使rest.py文件中的路由生效
 

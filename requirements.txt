@@ -31,6 +31,7 @@ Flask-Admin==1.4.2
 Flask-Security==1.7.5
 yunpian-sdk-python
 -e git://github.com/GeeTeam/gt-python-sdk.git#egg=geetest
+-e git://github.com/dellintosh/flask-adminlte#egg=flask-adminlte
 xlrd==1.0.0
 tornado==4.4.2
 flask-migrate==2.0.3

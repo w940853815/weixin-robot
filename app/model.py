@@ -21,3 +21,12 @@ class Message(db.Model):
 
     def __repr__(self):
         return self.MsgType
+
+
+class User(object):
+    """
+    Example User object.  Based loosely off of Flask-Login's User model.
+    """
+    full_name = "John Doe"
+    avatar = "/static/img/user2-160x160.jpg"
+    created_at = "November 12, 2012"
