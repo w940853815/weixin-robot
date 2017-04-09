@@ -88,3 +88,14 @@ ENV/
 # Rope project settings
 .ropeproject
 .idea/
+*.pyc
+*.pyo
+app.db
+search.db
+flask
+*.mo
+src
+src/geetest
+migrations
+
+migrations/

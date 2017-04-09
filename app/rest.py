@@ -4,14 +4,14 @@ __author__ = 'ruidong.wang@tsingdata.com'
 
 import hashlib
 import xml.etree.ElementTree as ET
-import logging
 import time
-from app import app
 from flask import request,render_template
 import urllib
 import urllib2
 import json
 
+from app import app,db
+from model import Message
 
 class Rec_Msg(object):
     def __init__(self, xmlData):
@@ -26,10 +26,34 @@ class Rec_TextMsg(Rec_Msg):
         Rec_Msg.__init__(self, xmlData)
         self.Content = xmlData.find('Content').text.encode("utf-8")
 
+    def insert_text_db(self,xmlData):
+        message = Message(
+            ToUserName = self.ToUserName,
+            FromUserName = self.FromUserName,
+            CreateTime = self.CreateTime,
+            MsgType = self.MsgType,
+            MsgId = self.MsgId,
+            Content = self.Content
+        )
+        db.session.add(message)
+        db.session.commit()
+
 class Rec_ImageMsg(Rec_Msg):
     def __init__(self, xmlData):
         Rec_Msg.__init__(self, xmlData)
         self.PicUrl = xmlData.find('PicUrl').text
+
+        def insert_img_db(self, xmlData):
+            message = Message(
+                ToUserName = self.ToUserName,
+                FromUserName = self.FromUserName,
+                CreateTime = self.CreateTime,
+                MsgType = self.MsgType,
+                MsgId = self.MsgId,
+                PicUrl = self.PicUrl
+            )
+            db.session.add(message)
+            db.session.commit()
 
 
 class Reply_Msg(object):
@@ -41,13 +65,26 @@ class Reply_Msg(object):
 
 
 class Reply_TextMsg(Reply_Msg):
-    def __init__(self, toUserName, fromUserName, content):
+    def __init__(self, toUserName, fromUserName, content, MsgType, MsgId):
         self.__dict = dict()
         self.__dict['ToUserName'] = toUserName
         self.__dict['FromUserName'] = fromUserName
         self.__dict['CreateTime'] = int(time.time())
         self.__dict['Content'] = content
+        self.MsgType = MsgType
+        self.MsgId = MsgId
 
+    def insert_api_reply_db(self):
+        message = Message(
+            ToUserName=self.__dict['ToUserName'],
+            FromUserName=self.__dict['FromUserName'],
+            CreateTime=int(time.time()),
+            MsgType=self.MsgType,
+            MsgId=self.MsgId,
+            Content= self.__dict['Content']
+        )
+        db.session.add(message)
+        db.session.commit()
     def send(self):
         XmlForm = """
         <xml>
@@ -91,7 +128,6 @@ def parse_xml(web_data):
         return Rec_TextMsg(xmlData)
     elif msg_type == 'image':
         return Rec_ImageMsg(xmlData)
-
         return XmlForm.format(**self.__dict)
 
 
@@ -147,8 +183,15 @@ def verify_server():
         if isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text':
             to_user = rec_msg.FromUserName
             from_user = rec_msg.ToUserName
+            rec_msg.insert_text_db(rec_msg)
             content = parse_content(rec_msg)
-            replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'))
+            replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'),rec_msg.MsgType,rec_msg.MsgId)
+            replyMsg.insert_api_reply_db()
             return replyMsg.send()
-
+        else:
+            to_user = rec_msg.FromUserName
+            from_user = rec_msg.ToUserName
+            content = '我正在学习识别中。。。^_^敬请期待'
+            replyMsg = Reply_TextMsg(to_user, from_user, content,rec_msg.MsgType,rec_msg.MsgId)
+            return replyMsg.send()
 

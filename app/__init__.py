@@ -6,6 +6,7 @@ __author__ = 'ruidong.wang@tsingdata.com'
 import os
 from flask import Flask
 from flask.json import JSONEncoder
+from flask_sqlalchemy import SQLAlchemy
 from tornado.options import options, define, parse_command_line
 
 app = Flask(__name__)
@@ -17,6 +18,9 @@ parse_command_line()
 app.debug = options.debug
 
 app.config.from_object('config_web')
+
+
+db = SQLAlchemy(app)
 
 class CustomJSONEncoder(JSONEncoder):
     """This class adds support for lazy translation texts to Flask's
@@ -47,5 +51,5 @@ if not app.debug:
     app.logger.info('microblog startup')
 
 
-from app import rest   #使rest.py文件中的路由生效
+from app import rest , model  #使rest.py文件中的路由生效
 
