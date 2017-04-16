@@ -7,8 +7,10 @@ import os
 from flask import Flask
 from flask.json import JSONEncoder
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from tornado.options import options, define, parse_command_line
 from flask_adminlte import AdminLTE
+from flask_babel import Babel, lazy_gettext
 
 app = Flask(__name__)
 define('port', type=int, default=80)
@@ -19,9 +21,13 @@ parse_command_line()
 app.debug = options.debug
 
 app.config.from_object('config_web')
-
-
+lm = LoginManager()
+lm.init_app(app)
+lm.login_view = 'login'
+lm.login_message = lazy_gettext(u'请登录.')
+babel = Babel(app)
 db = SQLAlchemy(app)
+
 AdminLTE(app)
 
 class CustomJSONEncoder(JSONEncoder):

@@ -23,10 +23,34 @@ class Message(db.Model):
         return self.MsgType
 
 
-class User(object):
-    """
-    Example User object.  Based loosely off of Flask-Login's User model.
-    """
-    full_name = "John Doe"
-    avatar = "/static/img/user2-160x160.jpg"
-    created_at = "November 12, 2012"
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    avatar = db.Column(db.String(1024))
+    password = db.Column(db.String(30), index=True)
+    last_seen = db.Column(db.DateTime)
+    active = db.Column(db.Boolean(), default=True)
+
+    @property
+    def is_authenticated(self):
+        return self.active
+
+    @property
+    def is_active(self):
+        return self.active
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        try:
+            return unicode(self.id)  # python 2
+        except NameError:
+            return str(self.id)  # python 3
+
+    def get_auth_token(self):
+        try:
+            return unicode(self.id)  # python 2
+        except NameError:
+            return str(self.id)  # python 3

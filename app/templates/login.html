@@ -8,33 +8,23 @@
 
   <div class="login-box">
     <div class="login-logo">
-      <strong>Admin</strong>LTE
+      <strong>微信机器人后台登录</strong>
     </div>
     <div class="login-box-body">
-      <p>Log into your account!</p>
-      {# Display errors (if there are any). #}
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <ul>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %}
-      {# Render the login form. #}
-      <form method="post">
+      {% include 'flash.html' %}
+      <form method="post" action="" name="login">
+        {{ form.hidden_tag() }}
         <div class="form-group has-feedback">
-          <input type="email" placeholder="Username or Email" required="true" class="form-control">
+          {{ form.username(class="form-control",placeholder="用户名",required="true") }}
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-          <input type="password" placeholder="Password" required="true" class="form-control">
+          {{ form.password(type="password", placeholder="密码", required="true", class="form-control") }}
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
           <div class="col-xs-4 col-xs-offset-8">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">登 录</button>
           </div>
         </div>
       </form>
