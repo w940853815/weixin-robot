@@ -1,0 +1,10 @@
+<aiml version="1.0">
+
+<category>
+<pattern>载入配置文件</pattern>
+<template>
+<learn>/var/www/weixin-robot/app/cn-test.aiml</learn>
+</template>
+</category>
+
+</aiml>

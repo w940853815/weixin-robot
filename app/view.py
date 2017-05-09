@@ -18,6 +18,7 @@ def get_auth_token():
 
 @lm.user_loader
 def load_user(id):
+    print id
     return User.query.get(int(id))
 
 @babel.localeselector
@@ -49,6 +50,7 @@ def internal_error(error):
     return render_template('500.html'), 500
 
 @app.route("/")
+@login_required
 def index():
     print g.user
     current_user = g.user
@@ -84,12 +86,22 @@ def validate_login(resp):
     if user is None:
         flash(gettext(u'密码错误！'))
         return redirect(url_for('login'))
-    print '123'
-    print user.username
+    '''
+    bug:g.user为anonymous，和数据库user表字段active值是null有关系
+    '''
     login_user(user)
     return redirect(request.args.get('next') or url_for('index'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 
 @app.route('/lockscreen')
 def lockscreen():
     current_user = g.user.username
     return render_template('lockscreen.html', current_user=current_user)
+
+

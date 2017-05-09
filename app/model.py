@@ -3,6 +3,7 @@
 __author__ = 'ruidong.wang@tsingdata.com'
 
 from app import db
+from datetime import datetime
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -54,3 +55,14 @@ class User(db.Model):
             return unicode(self.id)  # python 2
         except NameError:
             return str(self.id)  # python 3
+
+    def __repr__(self):  # pragma: no cover
+        return '<User %r>' % (self.username)
+
+class Trained(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    conversation = db.Column(db.String(1024), index=True)
+    add_tme = db.Column(db.DateTime,default=datetime.now)
+
+    def __repr__(self):  # pragma: no cover
+        return self.conversation

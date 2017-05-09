@@ -5,13 +5,16 @@ __author__ = 'ruidong.wang@tsingdata.com'
 import hashlib
 import xml.etree.ElementTree as ET
 import time
-from flask import request,render_template
+from flask import request, redirect, url_for
 import urllib
 import urllib2
 import json
 
 from app import app,db
-from model import Message
+from model import Message, Trained
+from core import respond
+from baike_crawler import baike_crawler
+from zhihu_crawler import search_answer,answer_list_to_str
 
 class Rec_Msg(object):
     def __init__(self, xmlData):
@@ -36,6 +39,14 @@ class Rec_TextMsg(Rec_Msg):
             Content = self.Content
         )
         db.session.add(message)
+        db.session.commit()
+
+    def insert_trained_conversation_db(self,conversation):
+        data = Trained(
+            conversation = conversation
+
+        )
+        db.session.add(data)
         db.session.commit()
 
 class Rec_ImageMsg(Rec_Msg):
@@ -153,6 +164,7 @@ def parse_content(rec_msg):
 
 
 
+
 '''获取token只用于验证开发者服务器'''
 @app.route('/wx', methods=['GET','POST'])
 def verify_server():
@@ -175,13 +187,37 @@ def verify_server():
     if request.method == 'POST':
         web_data = request.data
         rec_msg = parse_xml(web_data)
+        to_user = rec_msg.FromUserName
+        from_user = rec_msg.ToUserName
+        msg_id = rec_msg.MsgId
         '''接受文本消息&被动回复文本消息'''
-        if isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text':
-            to_user = rec_msg.FromUserName
-            from_user = rec_msg.ToUserName
+        if '教我说话' in rec_msg.Content:
+            rec_msg.insert_trained_conversation_db(rec_msg.Content[13:])
+            content = u"我记下来了^_^"
+            replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            return replyMsg.send()
+        elif 'baike' in rec_msg.Content:
+            keyword = rec_msg.Content.split('@')[1]
+            data = baike_crawler(keyword=keyword)
+            content = data['summary'].encode('utf-8') + '\n' + '详情请见' + data['url']
+            replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            return replyMsg.send()
+        elif 'zhihu' in rec_msg.Content:
+            question = rec_msg.Content.split('@')[1]
+            print question
+            question_list = search_answer(question=question)
+            content = answer_list_to_str(question_list)
+            print content
+            replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            return replyMsg.send()
+        elif rec_msg.Content:
+            content = respond(rec_msg.Content)
+            replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            return replyMsg.send()
+        elif isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text':
             rec_msg.insert_text_db(rec_msg)
             content = parse_content(rec_msg)
-            replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'),rec_msg.MsgType,rec_msg.MsgId)
+            replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'),rec_msg.MsgType,msg_id)
             replyMsg.insert_api_reply_db()
             return replyMsg.send()
         else:
