@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 This file contains some simple AIML categories designed to test the Python
 AIML interpreter kernel.  Do not make any modifications to this file without
@@ -45,7 +45,12 @@ updating the tests in Kernel.py!
 <pattern>TEST DATE</pattern>
 <template>The date is <date/></template>
 </category>
-<!-- formal --><category><pattern>TEST FORMAL</pattern><template><formal>formal test passed</formal></template></category>
+
+<!-- formal -->
+<category>
+<pattern>TEST FORMAL</pattern>
+<template><formal>formal test passed</formal></template>
+</category>
 <!-- gender -->
 <category>
 <pattern>TEST GENDER</pattern>
@@ -82,7 +87,11 @@ updating the tests in Kernel.py!
 <template>Javascript is not yet implemented<javascript>var stuff</javascript></template>
 </category>
 
-<!-- lowercase --><category><pattern>TEST LOWERCASE</pattern><template>The Last Word Should Be <lowercase>Lowercase</lowercase></template></category>
+<!-- lowercase -->
+<category>
+<pattern>TEST LOWERCASE</pattern>
+<template>The Last Word Should Be <lowercase>Lowercase</lowercase></template>
+</category>
 
 <!-- person -->
 <category>
@@ -99,7 +108,8 @@ updating the tests in Kernel.py!
 <pattern>TEST PERSON2 *</pattern>
 <template><person2/></template>
 </category>
-<!-- random -->
+
+<!-- random -->
 <category>
 <pattern>TEST RANDOM</pattern>
 <template>
@@ -145,7 +155,8 @@ Nothing <random></random>here!
 <category>
 <pattern>SRAI TARGET</pattern>
 <template>srai test passed</template>
-</category><category>
+</category>
+<category>
 <pattern>TEST SRAI</pattern>
 <template><srai>srai target</srai></template>
 </category>
@@ -248,14 +259,22 @@ Nothing <random></random>here!
 </category>
 </topic>
 
-<!-- uppercase --><category><pattern>TEST UPPERCASE</pattern><template>The Last Word Should Be <uppercase>Uppercase</uppercase></template></category>
+<!-- uppercase -->
+<category>
+<pattern>TEST UPPERCASE</pattern>
+<template>The Last Word Should Be <uppercase>Uppercase</uppercase></template>
+</category>
 
-<!-- version --><category><pattern>TEST VERSION</pattern><template>PyAIML is version <version/></template></category>
+<!-- version -->
+<category>
+<pattern>TEST VERSION</pattern>
+<template>PyAIML is version <version/></template>
+</category>
 
 <!-- unicode support -->
 <category>
-<pattern>ÔÇÉÏºÃ</pattern>
-<template>Hey, you speak Chinese! ÔÇÉÏºÃ</template>
+<pattern>ï¿½ï¿½ï¿½Ïºï¿½</pattern>
+<template>Hey, you speak Chinese! ï¿½ï¿½ï¿½Ïºï¿½</template>
 </category>
 
 <!-- whitespace preservation -->

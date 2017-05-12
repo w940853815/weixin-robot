@@ -5,25 +5,28 @@ __author__ = 'ruidong.wang@tsingdata.com'
 
 import sys
 sys.path.insert(0, "../")
-
+import os
 import aiml
+import config_web as cfg
 
-# The Kernel object is the public interface to
-# the AIML interpreter.
+class TalkBot(aiml.Kernel):
+    def __init__(self, properties=cfg.BOT_PROPERTIES):
+        aiml.Kernel.__init__(self)
+        self.verbose(cfg.DEBUG)
+        if os.path.isfile("xdtuxbot.brn"):
+            self.bootstrap(brainFile="xdtuxbot.brn")
+        else:
+            self.init_bot()
+            self.saveBrain("xdtuxbot.brn")
+        for p in properties:
+            self.setBotPredicate(p, properties[p])
 
-k = aiml.Kernel()
-# Use the 'learn' method to load the contents
-# of an AIML file into the Kernel.
-k.learn("/var/www/weixin-robot/app/cn-startup.xml")
+    def init_bot(self):
+        for file in os.listdir(cfg.AIML_SET):
+            if file[-4::] == "aiml":
+                self.learn(os.path.join(cfg.AIML_SET, file))
 
-# Use the 'respond' method to compute the response
-# to a user's input string.  respond() returns
-# the interpreter's response, which in this case
-# we ignore.
 
-k.respond("载入配置文件")
-# Loop forever, reading user input from the command
-# line and printing responses.
-def respond(input):
-    return k.respond(input=input)
+
+bot = TalkBot()
 

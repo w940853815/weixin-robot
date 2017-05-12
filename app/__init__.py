@@ -47,10 +47,10 @@ app.json_encoder = CustomJSONEncoder
 
 
 
-if not app.debug:
+if app.debug:
     import logging
     from logging.handlers import RotatingFileHandler
-    file_handler = RotatingFileHandler('tmp/web_log.log', 'a',
+    file_handler = RotatingFileHandler('../tmp/web_log.log', 'a',
                                        1 * 1024 * 1024, 10)
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(logging.Formatter(
@@ -60,5 +60,6 @@ if not app.debug:
     app.logger.info('microblog startup')
 
 
-from app import rest , model ,view  #使rest.py文件中的路由生效
+# from app import rest , model ,view  #使rest.py文件中的路由生效 #TODO 还不清楚报错原因，多次引入了
 
+from app import rest, model, view

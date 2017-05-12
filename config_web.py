@@ -27,7 +27,7 @@ SECRET_KEY = 'you-will-never-guess'
 # SQLALCHEMY_RECORD_QUERIES = True
 # WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
-# slow database query threshold (in seconds)
+
 DATABASE_QUERY_TIMEOUT = 0.5
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
 SQLALCHEMY_DATABASE_URI = 'mysql://root:940wangrui@123.207.139.130:3306/weixin_robot'
@@ -56,4 +56,17 @@ MAX_SEARCH_RESULTS = 50
 LANGUAGES = {
     'en': 'English',
     'es': 'Español'
+}
+
+AIML_SET = os.path.join(os.path.dirname(__file__),'app/aiml_set')
+DEBUG = False
+BOT_PROPERTIES = {
+    "name":"@xdtuxbot",
+    "master":"silence",
+    "birthday":"地球时间2017年5月10日",
+    "orgnization":"计算机工程系",
+    "univercity":"太原工业学院",
+    "gender":"男生",
+    "city":"太原",
+    "os":"Linux",
 }

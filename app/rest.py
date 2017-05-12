@@ -12,9 +12,13 @@ import json
 
 from app import app,db
 from model import Message, Trained
-from core import respond
+from core import bot
 from baike_crawler import baike_crawler
 from zhihu_crawler import search_answer,answer_list_to_str
+from askToDB import is_ask_to_db,ask_to_db
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 class Rec_Msg(object):
     def __init__(self, xmlData):
@@ -191,30 +195,35 @@ def verify_server():
         from_user = rec_msg.ToUserName
         msg_id = rec_msg.MsgId
         '''接受文本消息&被动回复文本消息'''
-        if '教我说话' in rec_msg.Content:
-            rec_msg.insert_trained_conversation_db(rec_msg.Content[13:])
+        if 'teach@' in rec_msg.Content:
+            rec_msg.insert_trained_conversation_db(rec_msg.Content.split('@')[1])
             content = u"我记下来了^_^"
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
             return replyMsg.send()
-        elif 'baike' in rec_msg.Content:
+        elif 'baike@' in rec_msg.Content:
             keyword = rec_msg.Content.split('@')[1]
             data = baike_crawler(keyword=keyword)
             content = data['summary'].encode('utf-8') + '\n' + '详情请见' + data['url']
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
             return replyMsg.send()
-        elif 'zhihu' in rec_msg.Content:
+        elif 'zhihu@' in rec_msg.Content:
             question = rec_msg.Content.split('@')[1]
-            print question
             question_list = search_answer(question=question)
             content = answer_list_to_str(question_list)
-            print content
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
             return replyMsg.send()
-        elif rec_msg.Content:
-            content = respond(rec_msg.Content)
+        elif 'talk@' in rec_msg.Content:
+            content = bot.respond(rec_msg.Content.split('@')[1])
+            if is_ask_to_db(content):
+                query = ask_to_db(rec_msg.Content.split('@')[1])
+                if query is None:
+                    content = '我暂时还不知道怎么回答你的问题，你可以来教我吗？请联系我q940853815'
+                else:
+                    content = query.replay
+
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
             return replyMsg.send()
-        elif isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text':
+        elif isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text' and 'tuling@' in rec_msg.Content:
             rec_msg.insert_text_db(rec_msg)
             content = parse_content(rec_msg)
             replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'),rec_msg.MsgType,msg_id)

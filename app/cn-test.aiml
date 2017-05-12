@@ -17,6 +17,7 @@
 </template>
 </category>
 
+
 <category>
 <pattern>再见</pattern>
 <template>
@@ -37,6 +38,7 @@
 <srai>HELLO</srai>
 </template>
 </category>
+
 
 <category>
 <pattern>谢谢</pattern>
@@ -181,6 +183,5 @@
 <get name="favcolor"/>, 我也喜欢, 不过我更喜欢黑色.
 </template>
 </category>
-
 
 </aiml>
