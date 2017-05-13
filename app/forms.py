@@ -12,5 +12,5 @@ class LoginForm(Form):
 
 class ConversationForm(Form):
     question = StringField('question', validators=[DataRequired()])
-    repley = StringField('repley', validators=[DataRequired()])
+    replay = StringField('repley', validators=[DataRequired()])
     label = StringField('label', validators=[DataRequired()])

@@ -78,7 +78,7 @@
             </div>
           </div>
           <ul class="sidebar-menu">
-          <li class="header">HEADER</li>
+          <li class="header">admin</li>
             <li class="active">
               <a href="{{ url_for('index') }}">
                 <i class="fa fa-dashboard"></i> <span>简介</span>
@@ -86,11 +86,27 @@
             </li>
 
             <li class="treeview">
-              <a href="{{ url_for('conversation') }}">
+               <a href="#">
                 <i class="fa fa-folder"></i>
                 <span>对话管理</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
+              <ul class="treeview-menu">
+                <li>
+                  <a href="{{ url_for('create_conversation') }}">
+                    <i class="fa fa-circle-o"></i>
+                    添加对话
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ url_for('list_conversation') }}">
+                    <i class="fa fa-circle-o"></i>
+                    对话列表
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
               <a href="#">
                 <i class="fa fa-folder"></i>
                 <span>通用</span>

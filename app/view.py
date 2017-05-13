@@ -103,12 +103,24 @@ def lockscreen():
     return render_template('lockscreen.html', current_user=current_user)
 
 
-@app.route('/conversation')
-def conversation():
+@app.route('/list/conversation')
+def list_conversation():
     conversation = AimlData.query.filter(AimlData.id > 0)
     return render_template('conversation_list.html',conversation=conversation)
 
-@app.route('/view/conversation')
-def view_conversation():
+@app.route('/create/conversation', methods=['GET','POST'])
+def create_conversation():
     form = ConversationForm()
+    if request.method == 'POST':
+        question = request.form['question']
+        replay = request.form['replay']
+        label = request.form['label']
+        aiml_data = AimlData(
+            question = question,
+            replay = replay,
+            label = label
+        )
+        db.session.add(aiml_data)
+        db.session.commit()
+        return render_template('create_conversation.html', form=form)
     return render_template('create_conversation.html', form=form)

@@ -32,13 +32,14 @@
 	      {{ c.replay }}
 	    </td>
 	    <td>
-	      {{ c.create_time }}
+	      {{ c.create_time.strftime("%Y-%m-%d %H:%M:%S") }}
 	    </td>
 	    <td>
-          {{ c.last_modify_time }}
+          {{ c.last_modify_time.strftime("%Y-%m-%d %H:%M:%S") }}
 	    </td>
         <td>
-          {{ c.label }}
+            <span class="label label-primary">{{ c.label }}</span>
+
 	    </td>
 	    <td>
 	      <form action="" method="post" name="edit_bulletin" onsubmit="return confirm('确认要提交吗?');">
