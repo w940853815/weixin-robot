@@ -70,16 +70,12 @@ class Trained(db.Model):
 
 class AimlData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    create_time = db.Column(db.DateTime)
+    create_time = db.Column(db.DateTime,default=datetime.now)
     is_deleted = db.Column(db.Integer,default=0)
-    last_modify_time = db.Column(db.DateTime)
-    question = db.Column(db.String(512))
+    last_modify_time = db.Column(db.DateTime,default=datetime.now)
+    question = db.Column(db.String(512),index=True)
     replay = db.Column(db.String(512))
     label =  db.Column(db.String(256))
-
-
-    @staticmethod
-
 
     def __repr__(self):  # pragma: no cover
         return self.question

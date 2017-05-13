@@ -86,6 +86,11 @@
             </li>
 
             <li class="treeview">
+              <a href="{{ url_for('conversation') }}">
+                <i class="fa fa-folder"></i>
+                <span>对话管理</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
               <a href="#">
                 <i class="fa fa-folder"></i>
                 <span>通用</span>
@@ -110,3 +115,6 @@
           </ul>
         <!-- /.sidebar -->
 {%- endblock sidebar %}
+ {% block content -%}
+
+{%- endblock content %}

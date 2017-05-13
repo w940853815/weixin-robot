@@ -1,0 +1,71 @@
+{% extends "index.html" %}
+ {% block content -%}
+<div class="row" style="overflow:hidden; text-overflow:ellipsis;">
+  <div class="col-md-10">
+    <div class="box">
+      <div class="box-header with-border">
+         <h3 class="box-title">对话管理</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+           <th>序号</th>
+           <th>问题</th>
+	       <th>回答</th>
+           <th>创建时间</th>
+           <th>修改时间</th>
+	       <th>标签</th>
+	    <th style="width: 40px"></th>
+	  </tr>
+ {% if conversation %}
+   {% for c in conversation %}
+	  <tr>
+	    <td>
+	      {{ c.id }}
+	    </td>
+	    <td>
+<a href="/bd/view_bulletin?id={{c.question}}">
+	      {{ c.question }}
+</a>
+	    </td>
+	    <td>
+	      {{ c.replay }}
+	    </td>
+	    <td>
+	      {{ c.create_time }}
+	    </td>
+	    <td>
+          {{ c.last_modify_time }}
+	    </td>
+        <td>
+          {{ c.label }}
+	    </td>
+	    <td>
+	      <form action="" method="post" name="edit_bulletin" onsubmit="return confirm('确认要提交吗?');">
+	      </form>
+	    </td>
+	  </tr>
+    {% endfor %}
+  {% endif %}
+
+    </table>
+
+  </div><!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <ul class="pagination pagination-sm no-margin pull-right">
+ {% if paging %}
+      <li><a href="/bd/view_bulletins?page=1">&laquo;</a></li>
+   {% for i in range(paging.page_from,paging.page_to+1) %}
+
+      <li><a href="/bd/view_bulletins?page={{i}}">{{i}}</a></li>
+
+    {% endfor %}
+      <li><a href="/bd/view_bulletins?page={{paging.total_pages}}">&raquo;</a></li>
+  {% endif %}
+
+    </ul>
+  </div>
+</div><!-- /.box -->
+</div>
+</div>
+{%- endblock content %}

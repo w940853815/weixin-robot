@@ -9,3 +9,8 @@ from wtforms.validators import DataRequired, Length
 class LoginForm(Form):
     username = StringField('username', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
+
+class ConversationForm(Form):
+    question = StringField('question', validators=[DataRequired()])
+    repley = StringField('repley', validators=[DataRequired()])
+    label = StringField('label', validators=[DataRequired()])

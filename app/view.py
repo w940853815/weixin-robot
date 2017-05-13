@@ -5,8 +5,8 @@ __author__ = 'ruidong.wang@tsingdata.com'
 from flask import render_template, g, abort, redirect, url_for, flash, request
 from flask_babel import gettext
 from app import app, db, lm ,babel
-from .model import User
-from .forms import LoginForm
+from .model import User, AimlData
+from .forms import LoginForm, ConversationForm
 from flask_login import current_user, login_required, login_user, logout_user
 from datetime import datetime
 from config_web import LANGUAGES
@@ -18,7 +18,6 @@ def get_auth_token():
 
 @lm.user_loader
 def load_user(id):
-    print id
     return User.query.get(int(id))
 
 @babel.localeselector
@@ -52,7 +51,6 @@ def internal_error(error):
 @app.route("/")
 @login_required
 def index():
-    print g.user
     current_user = g.user
     return render_template('index.html',current_user = current_user)
 
@@ -105,3 +103,12 @@ def lockscreen():
     return render_template('lockscreen.html', current_user=current_user)
 
 
+@app.route('/conversation')
+def conversation():
+    conversation = AimlData.query.filter(AimlData.id > 0)
+    return render_template('conversation_list.html',conversation=conversation)
+
+@app.route('/view/conversation')
+def view_conversation():
+    form = ConversationForm()
+    return render_template('create_conversation.html', form=form)
