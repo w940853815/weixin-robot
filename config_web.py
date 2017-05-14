@@ -46,8 +46,7 @@ LANGUAGES = {
 MS_TRANSLATOR_CLIENT_ID = ''  # enter your MS translator app id here
 MS_TRANSLATOR_CLIENT_SECRET = ''  # enter your MS translator app secret here
 
-# administrator list
-ADMINS = ['noreply@coreplatform.org']
+
 
 # pagination
 POSTS_PER_PAGE = 50
@@ -70,3 +69,10 @@ BOT_PROPERTIES = {
     "city":"太原",
     "os":"Linux",
 }
+
+#tuling机器人api key
+TULING_API_KEY = 'b74a80570b614b8d971a91b00ce027af'
+
+WEI_XIN_TOKEN= 'wangruidong940853815'
+WEI_XIN_APP_ID = 'wxbf18978eec691e5e'
+WEI_XIN_APP_SECRET = '3cef339d6c263697dbf57d00f089a2a7'
