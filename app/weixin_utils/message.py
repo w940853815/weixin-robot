@@ -35,13 +35,7 @@ class Rec_TextMsg(Rec_Msg):
         db.session.add(message)
         db.session.commit()
 
-    def insert_trained_conversation_db(self,conversation):
-        data = Trained(
-            conversation = conversation
-
-        )
-        db.session.add(data)
-        db.session.commit()
+    
 
 class Rec_ImageMsg(Rec_Msg):
     def __init__(self, xmlData):
