@@ -2,7 +2,7 @@
 # coding=utf-8
 __author__ = 'ruidong.wang@tsingdata.com'
 from flask_wtf import Form
-from wtforms import StringField, BooleanField, TextAreaField, PasswordField, \
+from wtforms import StringField, FileField, TextAreaField, PasswordField, \
     validators
 from wtforms.validators import DataRequired, Length
 
@@ -14,3 +14,9 @@ class ConversationForm(Form):
     question = StringField('question', validators=[DataRequired()])
     replay = StringField('repley', validators=[DataRequired()])
     label = StringField('label', validators=[DataRequired()])
+
+class UserForm(Form):
+    username = StringField('username',validators=[DataRequired()])
+    first_password = PasswordField('first_password',validators=[DataRequired()])
+    confirm_password =PasswordField ('confirm_password',validators=[DataRequired()])
+    avatar = FileField()

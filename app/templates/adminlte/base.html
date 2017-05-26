@@ -8,6 +8,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     {%- endblock metas %}
     {%- block styles %}
+       <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- bootstrap 3.0.2 -->
     <link href="{{ adminlte_find_resource('css/bootstrap.css', cdn='local') }}" rel="stylesheet" type="text/css" />
     <!-- Toastr Notifications -->
@@ -132,7 +133,8 @@
       </script>
       <!-- Local application JS -->
       <script src="{{ adminlte_find_resource('js/app.js', cdn='local', use_minified=False) }}"></script>
+  <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" rel="stylesheet"></script>
     {%- endblock scripts %}
-
+    {% block extra_javascripts %} {% endblock %}
     </body>
 </html>

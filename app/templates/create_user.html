@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+ {% block content -%}
+<div class="col-md-8">
+    <form method="post" enctype="multipart/form-data">
+<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">添加用户</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>用户名</label>
+                    {{ form.username(type="text",class="form-control",placeholder="请输入用户名") }}
+                </div>
+                <div class="form-group">
+                  <label>密码</label>
+                    {{ form.first_password(type="password",class="form-control",placeholder="请输入密码") }}
+                </div>
+               <div class="form-group">
+                   <label>确认密码</label>
+                   {{ form.confirm_password(text="password",class="form-control",placeholder="请再次输入密码") }}
+               </div>
+                   <div class="form-group">
+                   <label>上传头像</label>
+                   {{ form.avatar }}
+               </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">提交</button>
+              </div>
+            </form>
+          </div>
+        </form>
+    </div>
+
+{%- endblock content %}

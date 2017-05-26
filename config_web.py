@@ -13,27 +13,25 @@ TEST = 'production'
 USER_LOG_PATH = '/var/log/user-log/user_log.log'
 
 UPLOAD_FOLDER = basedir + '/tmp/'
-ALLOWED_IMG_EXTENSIONS = ['png','jpg','jpeg','gif','PNG','JPG','JPEG','GIF']
+ALLOWED_IMG_EXTENSIONS = ['png','jpg','jpeg','gif','PNG','JPG','JPEG','GIF','bmp','BMP']
 
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
-
-if os.environ.get('DATABASE_URL') is None:
-    SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'app.db') +
-                               '?check_same_thread=False')
-else:
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
-SQLALCHEMY_RECORD_QUERIES = True
-WHOOSH_BASE = os.path.join(basedir, 'search.db')
-
-
-# DATABASE_QUERY_TIMEOUT = 0.5
-# SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
-# SQLALCHEMY_DATABASE_URI = 'mysql://root:940wangrui@123.207.139.130:3306/weixin_robot'
+#
+# if os.environ.get('DATABASE_URL') is None:
+#     SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'app.db') +
+#                                '?check_same_thread=False')
+# else:
+#     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+# SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 # SQLALCHEMY_RECORD_QUERIES = True
+# WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
-# email server
+
+DATABASE_QUERY_TIMEOUT = 0.5
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
+SQLALCHEMY_DATABASE_URI = 'mysql://root:940wangrui@123.207.139.130:3306/weixin_robot'
+SQLALCHEMY_RECORD_QUERIES = True
 
 
 # available languages

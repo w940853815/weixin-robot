@@ -1,0 +1,52 @@
+{% extends "index.html" %}
+ {% block content -%}
+<div class="row" style="overflow:hidden; text-overflow:ellipsis;">
+  <div class="col-md-10">
+    <div class="box">
+      <div class="box-header with-border">
+         <h3 class="box-title">用户管理</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered" id="example"><thead>
+          <tr>
+           <th>序号</th>
+           <th>用户名</th>
+	       <th>上次登录时间</th>
+           <th>活跃</th>
+          </tr>
+        </thead>
+            <tbody>
+ {% if user %}
+   {% for u in user %}
+
+	  <tr>
+	    <td>
+	      {{ u.id }}
+	    </td>
+	    <td>
+	      {{ u.username }}
+	    </td>
+	    <td>
+	      {{ u.last_seen.strftime("%Y-%m-%d %H:%M:%S") }}
+	    </td>
+	    <td>
+            {% if u.active %}
+           <i class="fa fa-check text-navy"></i>
+            {% else %}
+            <i class="fa fa-fw fa-exclamation"></i>
+            {% endif %}
+	    </td>
+	  </tr>
+    {% endfor %}
+  {% endif %}
+</tbody>
+    </table>
+
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+</div>
+</div>
+{%- endblock content %}
+{% block extra_javascripts %}
+<script src="{{ url_for('static', filename='js/example.js') }}"></script>
+{% endblock %}

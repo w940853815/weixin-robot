@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+ {% block content -%}
+<div class="row" style="overflow:hidden; text-overflow:ellipsis;">
+  <div class="col-md-10">
+    <div class="box">
+      <div class="box-header with-border">
+         <h3 class="box-title">微信消息管理</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered" id="example"><thead>
+          <tr>
+           <th>序号</th>
+           <th>发送用户</th>
+	       <th>开发者</th>
+           <th>创建时间</th>
+           <th>消息类型</th>
+	       <th>消息</th>
+          </tr>
+        </thead>
+            <tbody>
+ {% if message %}
+   {% for m in message %}
+
+	  <tr>
+	    <td>
+	      {{ m.id }}
+	    </td>
+	    <td>
+	      {{ m.ToUserName }}
+	    </td>
+	    <td>
+	      {{ m.FromUserName }}
+	    </td>
+	    <td>
+	      {{ m.CreateTime.strftime("%Y-%m-%d %H:%M:%S") }}
+	    </td>
+	    <td>
+          {{ m.MsgType }}
+	    </td>
+           <td>
+          {{ m.Content }}
+	    </td>
+	  </tr>
+    {% endfor %}
+  {% endif %}
+</tbody>
+    </table>
+
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+</div>
+</div>
+{%- endblock content %}
+{% block extra_javascripts %}
+<script src="{{ url_for('static', filename='js/example.js') }}"></script>
+{% endblock %}
