@@ -77,8 +77,8 @@ updating the tests in Kernel.py!
 
 <!-- input -->
 <category>
-<pattern>TEST INPUT</pattern>
-<template>You just said: <input index="1"/></template>
+<pattern>TESTINPUT</pattern>
+<template>You just said:<input index="1"/></template>
 </category>
 
 <!-- javascript -->
@@ -273,8 +273,8 @@ Nothing <random></random>here!
 
 <!-- unicode support -->
 <category>
-<pattern>���Ϻ�</pattern>
-<template>Hey, you speak Chinese! ���Ϻ�</template>
+<pattern>你好你好</pattern>
+<template>Hey, you speak Chinese!  你好你好</template>
 </category>
 
 <!-- whitespace preservation -->

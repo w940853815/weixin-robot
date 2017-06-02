@@ -110,7 +110,7 @@ def lockscreen():
     return render_template('lockscreen.html', current_user=current_user)
 
 @app.route('/list/user')
-#@login_required
+@login_required
 def list_user():
     user = User.query.filter(User.id > 0)
     return render_template('user_list.html',user=user)

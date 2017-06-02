@@ -29,7 +29,7 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     avatar = db.Column(db.String(512))
     password = db.Column(db.String(30), index=True)
-    last_seen = db.Column(db.DateTime)
+    last_seen = db.Column(db.DateTime,default=datetime.now)
     active = db.Column(db.Boolean(), default=True)
 
     @property
@@ -71,7 +71,7 @@ class Trained(db.Model):
 class AimlData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     create_time = db.Column(db.DateTime,default=datetime.now)
-    is_deleted = db.Column(db.Integer,default=0)
+    is_deleted = db.Column(db.Boolean(),default=False)
     last_modify_time = db.Column(db.DateTime,default=datetime.now)
     question = db.Column(db.String(512),index=True)
     replay = db.Column(db.String(512))
