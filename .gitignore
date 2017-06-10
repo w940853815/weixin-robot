@@ -99,3 +99,8 @@ src/geetest
 migrations
 
 migrations/
+.project
+.pydevproject
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.core.runtime.prefs
+nginx.conf

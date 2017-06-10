@@ -12,12 +12,6 @@ class Message(db.Model):
     CreateTime = db.Column(db.DateTime,default=datetime.now)
     MsgType = db.Column(db.String(32))
     Content = db.Column(db.VARCHAR(512))
-    PicUrl = db.Column(db.Text)  #图片链接（由系统生成）
-    MediaId = db.Column(db.VARCHAR(128)) #图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
-    Format = db.Column(db.String(16))#语音格式，如amr，speex等
-    Title = db.Column(db.VARCHAR(32)) #消息标题
-    Description = db.Column(db.VARCHAR(512)) #消息描述
-    Url = db.Column(db.Text) #消息链接
     MsgId =  db.Column(db.VARCHAR(64))
 
     def __repr__(self):
@@ -58,15 +52,6 @@ class User(db.Model):
 
     def __repr__(self):  # pragma: no cover
         return '<User %r>' % (self.username)
-
-class Trained(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    conversation = db.Column(db.String(512), index=True)
-    add_time = db.Column(db.DateTime,default=datetime.now)
-
-    def __repr__(self):  # pragma: no cover
-        return self.conversation
-
 
 class AimlData(db.Model):
     id = db.Column(db.Integer, primary_key=True)

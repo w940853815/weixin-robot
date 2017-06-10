@@ -153,8 +153,9 @@ def create_user():
 @app.route('/list/conversation')
 @login_required
 def list_conversation():
+    form = ConversationForm()
     conversation = AimlData.query.filter(AimlData.id > 0)
-    return render_template('conversation_list.html',conversation=conversation)
+    return render_template('conversation_list.html',conversation=conversation,form=form)
 
 @app.route('/create/conversation', methods=['GET','POST'])
 @login_required
@@ -174,8 +175,42 @@ def create_conversation():
         return render_template('create_conversation.html', form=form)
     return render_template('create_conversation.html', form=form)
 
+
+@app.route('/rest/edit/conversation',methods=['POST'])
+@login_required
+def edit_conversation():
+    if request.method == 'POST':
+        act = request.form.get('act','')
+        print act
+        if act == 'show':
+            id = request.form['id']
+            conversation = AimlData.query.filter(AimlData.id == id).first()
+            question = conversation.question
+            replay = conversation.replay
+            label =conversation.label
+            data = {
+                'id':id,
+                'question':question,
+                'replay':replay,
+                'label':label
+            }
+            return jsonify(data)
+        if act == '':
+            id = request.form['id']
+            print id
+            conversation = AimlData.query.filter(AimlData.id == id).first()
+            conversation.question = request.form['question']
+            conversation.replay = request.form['replay']
+            conversation.label = request.form['label']
+            db.session.add(conversation)
+            db.session.commit()
+            flash(u'对话数据修改成功！')
+            return redirect(url_for('list_conversation'))
+        # return 'success!'
+
 @app.route('/list/message')
 @login_required
 def list_message():
     message = Message.query.filter(Message.id > 0)
     return render_template('message_list.html',message=message)
+

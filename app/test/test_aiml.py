@@ -125,8 +125,3 @@ if __name__ == "__main__":
     runner = unittest.TextTestRunner()
     runner.run(suite)
 
-
-
-    # Run an interactive interpreter
-    #print "\nEntering interactive mode (ctrl-c to exit)"
-    #while True: print k.respond(raw_input("> "))

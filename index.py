@@ -24,7 +24,6 @@ def main():
     print "Application starts on port: ", options.port
     print "Product: ", options.production
     print "Debug:",  options.debug
-
     IOLoop.instance().start()
 
 if __name__ == '__main__':

@@ -43,12 +43,7 @@ def verify_server():
         from_user = rec_msg.ToUserName
         msg_id = rec_msg.MsgId
         '''接受文本消息&被动回复文本消息'''
-        if 'teach@' in rec_msg.Content:
-            rec_msg.insert_trained_conversation_db(rec_msg.Content.split('@')[1])
-            content = u"我记下来了^_^"
-            replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
-            return replyMsg.send()
-        elif 'baike@' in rec_msg.Content:
+        if 'baike@' in rec_msg.Content:
             keyword = rec_msg.Content.split('@')[1]
             data = baike_crawler(keyword=keyword)
             content = data['summary'].encode('utf-8') + '\n' + '详情请见' + data['url']

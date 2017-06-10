@@ -11,6 +11,7 @@ class LoginForm(Form):
     password = PasswordField('password', validators=[DataRequired()])
 
 class ConversationForm(Form):
+    id = StringField('id',validators=[DataRequired()])
     question = StringField('question', validators=[DataRequired()])
     replay = StringField('repley', validators=[DataRequired()])
     label = StringField('label', validators=[DataRequired()])

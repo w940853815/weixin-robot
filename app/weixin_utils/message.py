@@ -2,7 +2,7 @@
 # coding=utf-8
 __author__ = 'ruidong.wang@tsingdata.com'
 from app import db
-from app.model import Message, Trained
+from app.model import Message
 import xml.etree.ElementTree as ET
 import time
 import urllib

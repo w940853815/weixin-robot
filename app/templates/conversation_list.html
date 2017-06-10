@@ -7,6 +7,7 @@
          <h3 class="box-title">对话管理</h3>
       </div><!-- /.box-header -->
       <div class="box-body">
+          {% include 'flash.html' %}
         <table class="table table-bordered" id="example"><thead>
           <tr>
            <th>序号</th>
@@ -15,6 +16,7 @@
            <th>创建时间</th>
            <th>修改时间</th>
 	       <th>标签</th>
+              <th></th>
           </tr>
         </thead>
             <tbody>
@@ -40,20 +42,178 @@
           {{ c.last_modify_time.strftime("%Y-%m-%d %H:%M:%S") }}
 	    </td>
         <td>
-            <span class="label label-primary">{{ c.label }}</span>
+            <span class="badge badge-warning normal-font">{{ c.label }}</span>
 
 	    </td>
+          <td>
+              <span class="btn btn-info btn-xs m-r-3" data-toggle="modal" data-target="#EditModal" onclick="return get_edit_info({{ c.id }})">修改</span>
+          </td>
 	  </tr>
     {% endfor %}
   {% endif %}
 </tbody>
-    </table>
+</table>
 
   </div><!-- /.box-body -->
 </div><!-- /.box -->
 </div>
 </div>
+    <!-- 模态框示例（Modal） -->
+    <form method="post" action="/rest/edit/conversation" class="form-horizontal" role="form" id="form_data" style="margin: 20px;">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改对话
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                    {{ form.id(type="text",class="form-control",type="hidden") }}
+                </div>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                  <label>问题</label>
+                    {{ form.question(type="text",class="form-control",placeholder="请输入问题") }}
+                </div>
+                <div class="form-group">
+                  <label>回复</label>
+                    {{ form.replay(type="text",class="form-control",placeholder="请输入回复") }}
+                </div>
+               <div class="form-group">
+                   <label>标签</label>
+                   {{ form.label(class="form-control",placeholder="多个标签以空格分开") }}
+               </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary" onclick="check_form()">
+                        提交
+                    </button><span id="tip"> </span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    </form>
 {%- endblock content %}
 {% block extra_javascripts %}
 <script src="{{ url_for('static', filename='js/example.js') }}"></script>
+<script>
+
+    // 编辑表单
+    function get_edit_info(id)
+    {
+        if(!id)
+        {
+            alert('Error！');
+            return false;
+        }
+        // var form_data = new Array();
+
+        $.ajax(
+                {
+                    url: "/rest/edit/conversation",
+                    data:{"id":id,'act':'show'},
+                    type: "post",
+                    beforeSend:function()
+                    {
+                        // $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                        return true;
+                    },
+                    success:function(data)
+                    {
+                        if(data)
+                        {
+
+                            // 解析json数据
+                            var data = data;
+                            // 赋值
+                            $("#id").val(data.id)
+                            $("#question").val(data.question);
+
+                            $("#replay").val(data.replay);
+                            $("#label").val(data.label);
+
+                            // 将input元素设置为readonly
+                            $('id').attr("readonly","readonly")
+                           // location.reload();
+                        }
+                        else
+                        {
+                            $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                          //  alert('操作失败');
+                        }
+                    },
+                    error:function()
+                    {
+                        alert('请求出错');
+                    },
+                    complete:function()
+                    {
+                        // $('#tips').hide();
+                    }
+                });
+
+        return false;
+    }
+
+    // 提交表单
+    function check_form()
+    {
+        var question = $.trim($('#question').val());
+        var replay     = $.trim($('#relay').val());
+        var label = $('#label').val();
+        $.ajax(
+                {
+                    url: "/rest/edit/conversation",
+                    data:{"form_data":form_data,"act":"submit"},
+                    type: "post",
+                    beforeSend:function()
+                    {
+                        $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                        return true;
+                    },
+                    success:function(data)
+                    {
+                        if(data > 0)
+                        {
+
+                            var msg = "编辑";
+                            $("#tip").html("<span style='color:blueviolet'>恭喜，" +msg+ "成功！</span>");
+                            // document.location.href='system_notice.php'
+                            alert(msg + "OK！");
+                            location.reload();
+                        }
+                        else
+                        {
+                            $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                            alert('操作失败');
+                        }
+                    },
+                    error:function()
+                    {
+                        alert('请求出错');
+                    },
+                    complete:function()
+                    {
+                        $('#acting_tips').hide();
+                    }
+                });
+
+        return false;
+    }
+
+    $(function () { $('#addUserModal').on('hide.bs.modal', function () {
+        // 关闭时清空edit状态为add
+        $("#act").val("add");
+        location.reload();
+    })
+    });
+</script>
 {% endblock %}
