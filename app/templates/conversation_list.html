@@ -93,7 +93,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
-                    <button type="submit" class="btn btn-primary" onclick="check_form()">
+                    <button type="submit" class="btn btn-primary">
                         提交
                     </button><span id="tip"> </span>
                 </div>
@@ -105,8 +105,6 @@
 {% block extra_javascripts %}
 <script src="{{ url_for('static', filename='js/example.js') }}"></script>
 <script>
-
-    // 编辑表单
     function get_edit_info(id)
     {
         if(!id)
@@ -114,8 +112,6 @@
             alert('Error！');
             return false;
         }
-        // var form_data = new Array();
-
         $.ajax(
                 {
                     url: "/rest/edit/conversation",
@@ -162,58 +158,5 @@
 
         return false;
     }
-
-    // 提交表单
-    function check_form()
-    {
-        var question = $.trim($('#question').val());
-        var replay     = $.trim($('#relay').val());
-        var label = $('#label').val();
-        $.ajax(
-                {
-                    url: "/rest/edit/conversation",
-                    data:{"form_data":form_data,"act":"submit"},
-                    type: "post",
-                    beforeSend:function()
-                    {
-                        $("#tip").html("<span style='color:blue'>正在处理...</span>");
-                        return true;
-                    },
-                    success:function(data)
-                    {
-                        if(data > 0)
-                        {
-
-                            var msg = "编辑";
-                            $("#tip").html("<span style='color:blueviolet'>恭喜，" +msg+ "成功！</span>");
-                            // document.location.href='system_notice.php'
-                            alert(msg + "OK！");
-                            location.reload();
-                        }
-                        else
-                        {
-                            $("#tip").html("<span style='color:red'>失败，请重试</span>");
-                            alert('操作失败');
-                        }
-                    },
-                    error:function()
-                    {
-                        alert('请求出错');
-                    },
-                    complete:function()
-                    {
-                        $('#acting_tips').hide();
-                    }
-                });
-
-        return false;
-    }
-
-    $(function () { $('#addUserModal').on('hide.bs.modal', function () {
-        // 关闭时清空edit状态为add
-        $("#act").val("add");
-        location.reload();
-    })
-    });
 </script>
 {% endblock %}

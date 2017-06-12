@@ -112,8 +112,9 @@ def lockscreen():
 @app.route('/list/user')
 @login_required
 def list_user():
+    form = UserForm()
     user = User.query.filter(User.id > 0)
-    return render_template('user_list.html',user=user)
+    return render_template('user_list.html',user=user,form=form)
 
 @app.route('/create/user',methods=['GET','POST'])
 @login_required
@@ -175,13 +176,44 @@ def create_conversation():
         return render_template('create_conversation.html', form=form)
     return render_template('create_conversation.html', form=form)
 
+@app.route('/rest/edit/user',methods=['POST'])
+@login_required
+def edit_user():
+    if request.method == 'POST':
+        act = request.form.get('act','')
+        if act == 'show':
+            id = request.form['id']
+            user = User.query.filter(User.id == id).first()
+            username = user.username
+            password = user.password
+            is_active =user.is_active
+            print is_active
+            data = {
+                'id':id,
+                'username':username,
+                'password':password,
+                'is_active':is_active
+            }
+            return jsonify(data)
+        if act == '':
+            id = request.form['id']
+            user = User.query.filter(User.id == id).first()
+            if request.form.get('is_active','') == 'true':
+                user.active=True
+            else:
+                user.active=False
+            user.username = request.form['username']
+            user.password = request.form['first_password']
+            db.session.add(user)
+            db.session.commit()
+            flash(u'用户数据修改成功！')
+            return redirect(url_for('list_user'))
 
 @app.route('/rest/edit/conversation',methods=['POST'])
 @login_required
 def edit_conversation():
     if request.method == 'POST':
         act = request.form.get('act','')
-        print act
         if act == 'show':
             id = request.form['id']
             conversation = AimlData.query.filter(AimlData.id == id).first()
@@ -197,7 +229,6 @@ def edit_conversation():
             return jsonify(data)
         if act == '':
             id = request.form['id']
-            print id
             conversation = AimlData.query.filter(AimlData.id == id).first()
             conversation.question = request.form['question']
             conversation.replay = request.form['replay']

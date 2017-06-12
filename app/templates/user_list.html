@@ -3,6 +3,7 @@
 <div class="row" style="overflow:hidden; text-overflow:ellipsis;">
   <div class="col-md-10">
     <div class="box">
+        {% include 'flash.html' %}
       <div class="box-header with-border">
          <h3 class="box-title">用户管理</h3>
       </div><!-- /.box-header -->
@@ -11,8 +12,10 @@
           <tr>
            <th>序号</th>
            <th>用户名</th>
+              <th>密码</th>
 	       <th>上次登录时间</th>
            <th>活跃</th>
+              <th></th>
           </tr>
         </thead>
             <tbody>
@@ -26,6 +29,9 @@
 	    <td>
 	      {{ u.username }}
 	    </td>
+          <td>
+              {{ u.password }}
+          </td>
 	    <td>
 	      {{ u.last_seen.strftime("%Y-%m-%d %H:%M:%S") }}
 	    </td>
@@ -36,6 +42,9 @@
             <i class="fa fa-fw fa-exclamation"></i>
             {% endif %}
 	    </td>
+          <td align="center">
+              <span class="btn btn-info btn-xs m-r-3" data-toggle="modal" data-target="#EditModal" onclick="return get_edit_info({{ u.id }})">修改</span>
+          </td>
 	  </tr>
     {% endfor %}
   {% endif %}
@@ -46,7 +55,114 @@
 </div><!-- /.box -->
 </div>
 </div>
+ <!-- 模态框示例（Modal） -->
+    <form method="post" action="/rest/edit/user" class="form-horizontal" role="form" id="form_data" style="margin: 20px;">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改用户
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                    {{ form.id(type="text",class="form-control",type="hidden") }}
+                </div>
+                        <div class="form-group">
+                  <label>用户名</label>
+                    {{ form.username(type="text",class="form-control",placeholder="请输入问题") }}
+                </div>
+                <div class="form-group">
+                  <label>密码</label>
+                    {{ form.first_password(type="text",class="form-control",placeholder="请输入新密码") }}
+                </div>
+               <div class="form-group">
+                   <label>用户状态</label>
+                   <br>
+                   {{ form.is_active(type="checkbox",class="minimal",onclick="checkboxOnclick()") }}是否可登录
+                   </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        提交
+                    </button><span id="tip"> </span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    </form>
 {%- endblock content %}
 {% block extra_javascripts %}
 <script src="{{ url_for('static', filename='js/example.js') }}"></script>
+<script>
+          function checkboxOnclick(){
+
+          if ($('#is_active').is(":checked"))
+            $("#is_active").attr("value",true);
+          else
+            $("#is_active").attr("value",false);
+
+       }
+    function get_edit_info(id)
+    {
+        if(!id)
+        {
+            alert('Error！');
+            return false;
+        }
+        // var form_data = new Array();
+
+        $.ajax(
+                {
+                    url: "/rest/edit/user",
+                    data:{"id":id,'act':'show'},
+                    type: "post",
+                    beforeSend:function()
+                    {
+                        // $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                        return true;
+                    },
+                    success:function(data)
+                    {
+                        if(data)
+                        {
+
+                            // 解析json数据
+                            var data = data;
+                            // 赋值
+                            $("#id").val(data.id)
+                            $("#username").val(data.username);
+
+                            $("#first_password").val(data.password);
+                            $("#is_active").val(data.is_active);
+
+                            // 将input元素设置为readonly
+                            $('id').attr("readonly","readonly")
+                           // location.reload();
+                        }
+                        else
+                        {
+                            $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                          //  alert('操作失败');
+                        }
+                    },
+                    error:function()
+                    {
+                        alert('请求出错');
+                    },
+                    complete:function()
+                    {
+                        // $('#tips').hide();
+                    }
+                });
+
+        return false;
+    }
+</script>
 {% endblock %}

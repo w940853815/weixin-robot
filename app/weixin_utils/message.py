@@ -27,7 +27,6 @@ class Rec_TextMsg(Rec_Msg):
         message = Message(
             ToUserName = self.ToUserName,
             FromUserName = self.FromUserName,
-            CreateTime = self.CreateTime,
             MsgType = self.MsgType,
             MsgId = self.MsgId,
             Content = self.Content
@@ -64,7 +63,6 @@ class Reply_TextMsg(Reply_Msg):
         message = Message(
             ToUserName=self.__dict['ToUserName'],
             FromUserName=self.__dict['FromUserName'],
-            CreateTime=int(time.time()),
             MsgType=self.MsgType,
             MsgId=self.MsgId,
             Content= self.__dict['Content']

@@ -3,7 +3,7 @@
 __author__ = 'ruidong.wang@tsingdata.com'
 from flask_wtf import Form
 from wtforms import StringField, FileField, TextAreaField, PasswordField, \
-    validators
+    validators,BooleanField
 from wtforms.validators import DataRequired, Length
 
 class LoginForm(Form):
@@ -17,7 +17,9 @@ class ConversationForm(Form):
     label = StringField('label', validators=[DataRequired()])
 
 class UserForm(Form):
+    id = StringField('id',validators=[DataRequired()])
     username = StringField('username',validators=[DataRequired()])
     first_password = PasswordField('first_password',validators=[DataRequired()])
     confirm_password =PasswordField ('confirm_password',validators=[DataRequired()])
     avatar = FileField()
+    is_active = BooleanField()
