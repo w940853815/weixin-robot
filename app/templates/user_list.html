@@ -59,7 +59,7 @@
     <form method="post" action="/rest/edit/user" class="form-horizontal" role="form" id="form_data" style="margin: 20px;">
     <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="padding: 15px">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
@@ -143,6 +143,9 @@
                             $("#is_active").val(data.is_active);
 
                             // 将input元素设置为readonly
+                            if (data.is_active){
+                                $("#is_active").attr('checked','true')
+                            }
                             $('id').attr("readonly","readonly")
                            // location.reload();
                         }

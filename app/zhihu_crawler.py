@@ -23,7 +23,7 @@ def search_answer(question):
     return list
 def answer_list_to_str(list):
     str=''
-    for l in list[0:2]:
+    for l in list:
         str= str + l['question_description'].encode('utf-8') + '\n'+'详情请见' + 'https://www.zhihu.com'+\
              l['question_href'].encode('utf-8') + '\n'
     return str

@@ -2,7 +2,8 @@
 # coding=utf-8
 __author__ = 'ruidong.wang@tsingdata.com'
 
-from flask import render_template, g, jsonify, redirect, url_for, flash, request
+from flask import render_template, g, jsonify, redirect, url_for, flash, request, \
+send_from_directory
 from flask_babel import gettext
 from app import app, db, lm ,babel
 from .model import User, AimlData, Message
@@ -103,12 +104,6 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
-@app.route('/lockscreen')
-def lockscreen():
-    current_user = g.user.username
-    return render_template('lockscreen.html', current_user=current_user)
-
 @app.route('/list/user')
 @login_required
 def list_user():
@@ -125,6 +120,9 @@ def create_user():
         first_password = request.form['first_password']
         confirm_password = request.form['confirm_password']
         avatar_f =request.files['avatar']
+        if confirm_password != first_password:
+            flash(u'两次输入的密码不一致，请重新输入！')
+            return redirect(url_for('create_user'))
         if avatar_f:
             flag = '.' in avatar_f.filename and avatar_f.filename.rsplit('.',1)[1] in app.config['ALLOWED_IMG_EXTENSIONS']
             if not flag:
@@ -140,7 +138,8 @@ def create_user():
             avatar_f.save(os.path.join(
                 app.config['UPLOAD_FOLDER'], filename
             ))
-
+        else:
+            filename = '/avatar/default.jpg'
         user = User(
             username=username,
             password=first_password,
@@ -148,8 +147,25 @@ def create_user():
         )
         db.session.add(user)
         db.session.commit()
+        flash(u'创建用户成功！')
         return render_template('create_user.html', form=form)
     return render_template('create_user.html',form=form)
+
+@app.route('/avatar/<path:id>/<string:path>/<string:filename>/', methods=['GET', 'POST'])
+@login_required
+def avatar_show(id, path, filename):
+    avatar_img = os.path.join(
+        app.config['UPLOAD_FOLDER'], 'avatar', id, path
+    )
+    return send_from_directory(directory=avatar_img, filename=filename)
+
+@app.route('/avatar/default.jpg')
+def default_avatar():
+    avatar_img = os.path.join(
+        app.config['UPLOAD_FOLDER'], 'avatar'
+    )
+    print avatar_img
+    return send_from_directory(directory=avatar_img, filename='default.jpg')
 
 @app.route('/list/conversation')
 @login_required
@@ -173,6 +189,7 @@ def create_conversation():
         )
         db.session.add(aiml_data)
         db.session.commit()
+        flash(u'添加对话语料成功！')
         return render_template('create_conversation.html', form=form)
     return render_template('create_conversation.html', form=form)
 
@@ -187,7 +204,6 @@ def edit_user():
             username = user.username
             password = user.password
             is_active =user.is_active
-            print is_active
             data = {
                 'id':id,
                 'username':username,

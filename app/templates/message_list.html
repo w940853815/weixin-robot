@@ -1,7 +1,7 @@
 {% extends "index.html" %}
  {% block content -%}
 <div class="row" style="overflow:hidden; text-overflow:ellipsis;">
-  <div class="col-md-10">
+  <div class="col-md-12">
     <div class="box">
       <div class="box-header with-border">
          <h3 class="box-title">微信消息管理</h3>
@@ -9,11 +9,11 @@
       <div class="box-body">
         <table class="table table-bordered" id="example"><thead>
           <tr>
-           <th>序号</th>
+           <th style="width: 60px">序号</th>
            <th>发送用户</th>
 	       <th>开发者</th>
-           <th>创建时间</th>
-           <th>消息类型</th>
+           <th style="min-width: 80px">创建时间</th>
+           <th style="min-width: 100px">消息类型</th>
 	       <th>消息</th>
           </tr>
         </thead>

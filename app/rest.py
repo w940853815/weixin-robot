@@ -41,21 +41,41 @@ def verify_server():
         rec_msg = parse_xml(web_data)
         to_user = rec_msg.FromUserName
         from_user = rec_msg.ToUserName
-        msg_id = rec_msg.MsgId
         '''接受文本消息&被动回复文本消息'''
-        if 'baike@' in rec_msg.Content:
+        if rec_msg.MsgType == "event":
+            event=rec_msg.Event
+            msg_id='1234567890123456'
+            if event == "subscribe":
+                # replayText = 'talk@你要说的话-------->和机器人聊天   tuling@你要说的话----->和图灵机器人聊天 \
+                #                                                    baike@关键字------------>查看百度百科相关解释  \
+                #                                                    zhihu@问题---------------->查看知乎相关回答 \
+                #                                                            想要教机器人说话------->请访问网址http://123.207.139.130'
+                replayText = 'talk@你要说的话---->和机器人聊天******tuling@你要说的话---->和图灵机器人聊天' \
+                             '******baike@关键字---->查看百度百科相关解释******zhihu@问题' \
+                             '---->查看知乎相关回答******想要教机器人说话---->请访问网址http://123.207.139.130'
+                replyMsg = Reply_TextMsg(to_user, from_user, replayText,rec_msg.MsgType,msg_id)
+                return replyMsg.send()
+        elif 'baike@' in rec_msg.Content:
+            msg_id = rec_msg.MsgId
+            rec_msg.insert_text_db(rec_msg)
             keyword = rec_msg.Content.split('@')[1]
             data = baike_crawler(keyword=keyword)
             content = data['summary'].encode('utf-8') + '\n' + '详情请见' + data['url']
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            replyMsg.insert_reply_db()
             return replyMsg.send()
         elif 'zhihu@' in rec_msg.Content:
+            msg_id = rec_msg.MsgId
+            rec_msg.insert_text_db(rec_msg)
             question = rec_msg.Content.split('@')[1]
             question_list = search_answer(question=question)
             content = answer_list_to_str(question_list)
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            replyMsg.insert_reply_db()
             return replyMsg.send()
         elif 'talk@' in rec_msg.Content:
+            msg_id = rec_msg.MsgId
+            rec_msg.insert_text_db(rec_msg)
             content = bot.respond(rec_msg.Content.split('@')[1])
             if is_ask_to_db(content):
                 query = ask_to_db(rec_msg.Content.split('@')[1])
@@ -64,20 +84,25 @@ def verify_server():
                 else:
                     content = query.replay
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
+            replyMsg.insert_reply_db()
             return replyMsg.send()
         elif isinstance(rec_msg, Rec_Msg) and rec_msg.MsgType == 'text' and 'tuling@' in rec_msg.Content:
+            msg_id = rec_msg.MsgId
             rec_msg.insert_text_db(rec_msg)
             content = parse_content(rec_msg)
             replyMsg = Reply_TextMsg(to_user, from_user, content['text'].encode('utf-8'),rec_msg.MsgType,msg_id)
-            replyMsg.insert_api_reply_db()
+            replyMsg.insert_reply_db()
             return replyMsg.send()
         else:
             to_user = rec_msg.FromUserName
             from_user = rec_msg.ToUserName
-            content = 'talk@你要说的话-------->和机器人聊天   tuling@你要说的话----->和图灵机器人聊天 \
-                                                    baike@关键字------------>查看百度百科相关解释  \
-                                                    zhihu@问题---------------->查看知乎相关回答 \
-                                                            想要教机器人说话------->请访问网址http://123.207.139.130'
+            # content = 'talk@你要说的话-------->和机器人聊天   tuling@你要说的话----->和图灵机器人聊天 \
+            #                                         baike@关键字------------>查看百度百科相关解释  \
+            #                                         zhihu@问题---------------->查看知乎相关回答 \
+            #                                                 想要教机器人说话------->请访问网址http://123.207.139.130'
+            content = 'talk@你要说的话---->和机器人聊天******tuling@你要说的话---->和图灵机器人聊天' \
+                         '******baike@关键字---->查看百度百科相关解释******zhihu@问题' \
+                         '---->查看知乎相关回答******想要教机器人说话---->请访问网址http://123.207.139.130'
             replyMsg = Reply_TextMsg(to_user, from_user, content,rec_msg.MsgType,rec_msg.MsgId)
             return replyMsg.send()
 

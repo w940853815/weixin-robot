@@ -16,12 +16,13 @@ class Rec_Msg(object):
         self.FromUserName = xmlData.find('FromUserName').text
         self.CreateTime = xmlData.find('CreateTime').text
         self.MsgType = xmlData.find('MsgType').text
-        self.MsgId = xmlData.find('MsgId').text
+
 
 class Rec_TextMsg(Rec_Msg):
     def __init__(self, xmlData):
         Rec_Msg.__init__(self, xmlData)
         self.Content = xmlData.find('Content').text.encode("utf-8")
+        self.MsgId = xmlData.find('MsgId').text
 
     def insert_text_db(self,xmlData):
         message = Message(
@@ -36,10 +37,11 @@ class Rec_TextMsg(Rec_Msg):
 
     
 
-class Rec_ImageMsg(Rec_Msg):
+class Rec_EventMsg(Rec_Msg):
     def __init__(self, xmlData):
         Rec_Msg.__init__(self, xmlData)
-        self.PicUrl = xmlData.find('PicUrl').text
+        self.Event = xmlData.find('Event').text
+        self.EventKey = xmlData.find('EventKey').text
 
 class Reply_Msg(object):
     def __init__(self):
@@ -59,7 +61,7 @@ class Reply_TextMsg(Reply_Msg):
         self.MsgType = MsgType
         self.MsgId = MsgId
 
-    def insert_api_reply_db(self):
+    def insert_reply_db(self):
         message = Message(
             ToUserName=self.__dict['ToUserName'],
             FromUserName=self.__dict['FromUserName'],
@@ -82,7 +84,7 @@ class Reply_TextMsg(Reply_Msg):
         return XmlForm.format(**self.__dict)
 
 
-class Reply_ImageMsg(Reply_Msg):
+class Reply_EventMsg(Reply_Msg):
     def __init__(self, toUserName, fromUserName, mediaId):
         self.__dict = dict()
         self.__dict['ToUserName'] = toUserName
@@ -104,15 +106,17 @@ class Reply_ImageMsg(Reply_Msg):
         """
 
 def parse_xml(web_data):
+    print web_data
     if len(web_data) == 0:
         return None
     xmlData = ET.fromstring(web_data)
     msg_type = xmlData.find('MsgType').text
     if msg_type == 'text':
         return Rec_TextMsg(xmlData)
-    elif msg_type == 'image':
-        return Rec_ImageMsg(xmlData)
-        return XmlForm.format(**self.__dict)
+    elif msg_type == 'event':
+        print '123'
+        return Rec_EventMsg(xmlData)
+
 
 
 def parse_content(rec_msg):
