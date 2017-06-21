@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
-
-<!--
-还不支持if语句。
-<if name="name" value="cars"></if> 
-<if name="name" contains="cars"></if>
-<if name="name" exists="true"></if>
-
-<category>
-<pattern>你叫什么</pattern>
-<template>
-<if name="name" exists="true">
-Your name is <get name="name"/>.
-<else/>
-What is your name?
-</if>
-</template> 
-</category>
-<category>
-	<pattern>我叫*</pattern>
-	<template>
-	<think><set name="name"><star/></set></think>
-	你好啊。
-	</template>
-</category>
--->
-
 <category>
 	<pattern>T</pattern>
 	
@@ -59,65 +33,52 @@ What is your name?
 	</template>
 </category>
 
-<!--  <category>
-	<pattern>东东</pattern>
-	<template>
-	<think>  
-        <system> 
-          String learn(String str)  
-          {  
-            return "我在学习："+str;
-          }  
-        </system>  
-      </think>
-	</template>
-</category>
--->
+
 
 <category> 
-<pattern>*自学*</pattern> 
+<pattern>*自学</pattern>
 <template><gossip>自学<system>learn("哈哈")</system></gossip>  
 </template> 
 </category> 
 
 <category> 
-<pattern>* 思 维 *   </pattern> 
+<pattern>思维</pattern>
 <template> <gossip>天马行空仿如逆水行舟，厉害不愧以点子称王.<id/> </gossip>
 </template> 
 </category> 
 
 <category> 
-<pattern>* 给 你 * 范 文 *   </pattern> 
+<pattern>给你范文</pattern>
 <template> 好呀，借鉴借鉴，先谢了    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 及 格 *   </pattern> 
+<pattern>及格</pattern>
 <template> 对你来说还不是小CASE呀    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 深 造 *   </pattern> 
+<pattern>深造</pattern>
 <template> 如果是男人还可以考虑，如果是女人就算了    
 </template> 
 </category> 
  
 <category> 
-<pattern>* 毕 业 *   </pattern> 
+<pattern>毕业了</pattern>
 <template> 还想继续深造吗    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 考 * 傻 *   </pattern> 
+<pattern>考傻了</pattern>
 <template> 傻了总比被杀了好,老师是面慈手狠啊,毒的很    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 答 辩 *   </pattern> 
+<pattern>答辩</pattern>
 <template> 就要毕业了哇，恭喜了</template> 
 </category>
 </aiml>

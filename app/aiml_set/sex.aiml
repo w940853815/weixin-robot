@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
   <category>
-    <pattern>亲 一 个</pattern>
+    <pattern>亲一个</pattern>
     <template><srai>亲亲</srai></template>
   </category>
   
   <category>
-    <pattern>啵 一 个</pattern>
+    <pattern>啵一个</pattern>
     <template><srai>亲亲</srai></template>
   </category>
 
   <category>
-    <pattern>亲 一 下</pattern>
+    <pattern>亲一下</pattern>
     <template><srai>亲亲</srai></template>
   </category>
 
   <category>
-    <pattern>亲 亲</pattern>
+    <pattern>亲亲</pattern>
     <template>
       <random>
         <li>乃不怕触电啊喂!</li>

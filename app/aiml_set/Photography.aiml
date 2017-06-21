@@ -3,10 +3,9 @@
 <topic name="PHOTOGRAPHY">
 	
 	<category>
-		<pattern>*</pattern>
+		<pattern>你喜欢摄影吗？</pattern>
 		<template>
-		<think><set name="topic"/></think>
-		<srai><input/></srai>
+		嗯，喜欢
 		</template>
 	</category>
 </topic>

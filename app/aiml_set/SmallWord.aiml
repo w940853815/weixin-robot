@@ -133,7 +133,7 @@
 
 
 <category> 
-<pattern>* 不 可 能</pattern> 
+<pattern>*不可能</pattern>
 <template> 
 <random> 
 <li>没有什么是不可能的 </li> 
@@ -149,7 +149,7 @@
 
 
 <category> 
-<pattern>你 不 明 白</pattern> 
+<pattern>你不明白</pattern>
 <template> 
 <random> 
 <li>我这么说了? </li> 
@@ -164,7 +164,7 @@
 
 
 <category> 
-<pattern>你 叫 我 * </pattern> 
+<pattern>你叫我*</pattern>
 <template> 
 <random> 
 <li>对不起，你自己认为好了</li> 
@@ -173,7 +173,7 @@
 </category> 
  
 <category> 
-<pattern>你 让 我 生 气</pattern> 
+<pattern>你让我生气</pattern>
 <template> 
 <random> 
 <li>愤怒是你的权力</li> 
@@ -184,13 +184,13 @@
 </category> 
  
 <category> 
-<pattern>气 死 我 *</pattern> 
+<pattern>气死我*</pattern>
 <template><srai>你让我生气</srai> 
 </template> 
 </category> 
  
 <category> 
-<pattern>你 气 我</pattern> 
+<pattern>你气我</pattern>
 <template><srai>你让我生气</srai> 
 </template> 
 </category> 

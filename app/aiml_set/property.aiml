@@ -6,9 +6,9 @@
       <think>
         <set name="botname">@xdtuxbot</set>
         <set name="master">@bigeagle_xd</set>
-        <set name="orgnization">西电开源社区</set>
+        <set name="orgnization">太原工业学院</set>
         <set name="gender">男生</set>
-        <set name="from_city">西安</set>
+        <set name="from_city">太原</set>
         <set name="os">Linux</set>
       </think>
     </template>

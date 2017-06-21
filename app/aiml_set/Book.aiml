@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
 <topic name="BOOK">
-	
 	<category>
-		<pattern>图书</pattern>
+		<pattern>*图书*</pattern>
 		<template>
-		<think><set name="topic"/></think>
-		<srai><input/></srai>
+		<li>这书主要讲什么。</li>
+        <li>你喜欢什么图书？</li>
 		</template>
 	</category>
 </topic>

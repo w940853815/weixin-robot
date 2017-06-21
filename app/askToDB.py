@@ -5,6 +5,8 @@ __author__ = 'ruidong.wang@tsingdata.com'
 from model import AimlData
 
 def is_ask_to_db(input):
+    if input == '':
+        return False
     if input[0] == '#':
         return True
 

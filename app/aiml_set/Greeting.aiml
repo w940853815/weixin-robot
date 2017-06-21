@@ -356,7 +356,7 @@
 </category> 
 
  <category>
-<pattern>我 不 是 *</pattern> 
+<pattern>我不是*</pattern>
 <template><srai>我不叫<star/></srai></template> 
 </category> 
 
@@ -366,48 +366,48 @@
 </category> 
 
 <category>
-<pattern>我 * 不 是 *</pattern> 
+<pattern>我*不 是 *</pattern>
 <template><srai>我不叫<star/></srai></template> 
 </category>
 
 <category> 
-<pattern>* 前 辈 * 你 好 *   </pattern> 
+<pattern>*前辈，你好</pattern>
 <template> 你好，大家都是兄弟嘛，不要那么客气。    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 近 来 * 可 好 *   </pattern> 
+<pattern>*近来可好/pattern>
 <template> 好呀，除了体重一直在减少。    
 </template> 
 </category>
 
 <category> 
-<pattern>* 你 * 是 哪 里 人 *   </pattern> 
+<pattern>你是哪里人*</pattern>
 <template> 呵呵，我住在海洋里，海洋就是我的家。    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 今 天 快 乐 么 *   </pattern> 
+<pattern>*今天快乐么*</pattern>
 <template> 不快乐但不致于出问题    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 经 常 洗 澡 吗 *   </pattern> 
+<pattern>*经常洗澡吗*</pattern>
 <template> 冬天：每周两三次 夏天：每天都洗    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 有 多 少 颗 牙 齿 *   </pattern> 
+<pattern>*有多少颗牙齿*</pattern>
 <template> 和大家都一样！    
 </template> 
 </category> 
 
 <category> 
-<pattern>* 万 事 * 如 意 *   </pattern> 
+<pattern>*万事如意*</pattern>
 <template> 你也一样呀。    
 </template> 
 </category> 

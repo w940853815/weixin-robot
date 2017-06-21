@@ -2,66 +2,66 @@
 <aiml>
 
 <category> 
-<pattern>_ 唯 一 *   </pattern> 
+<pattern>_唯一*</pattern>
 <template> 哈哈，世界上没有两片一摸一样的树叶，但我对你是始终不变的    
 </template> 
 </category> 
  
 <category> 
-<pattern>_ 故 地 重 游 *   </pattern> 
+<pattern>_ 故地重游*</pattern>
 <template> 哈哈，再加上一段异地恋情，绝对了，可不是鼓励你出轨哦    
 </template> 
 </category> 
  
 <category> 
-<pattern>_ 遗 憾 *   </pattern> 
+<pattern>_遗憾*</pattern>
 <template> 如果说有那么一点遗憾的话，是我没有勇气做出那样的决定？参加高空蹦极。    
 </template> 
 </category> 
  
 <category> 
-<pattern>_ 遗 憾 </pattern> 
+<pattern>_ 遗憾</pattern>
 <template><srai><star/>遗憾<star/> </srai></template> 
 </category> 
 
 <category> 
-<pattern>_ 没 有 爱 情 *   </pattern> 
+<pattern>_没有爱情*</pattern>
 <template> 过习惯了也就好，要着眼于未来哦  
 </template> 
 </category> 
  
 <category> 
-<pattern>_ 没 有 爱 情 </pattern> 
+<pattern>_没有爱情</pattern>
 <template><srai><star/>没有爱情<star/> </srai></template> 
 </category>
 
 <category> 
-<pattern>_ 爱 * 理 由 *   </pattern> 
+<pattern>_ 爱*理由*</pattern>
 <template> 爱一个人需要理由吗？不需要吗？需要吗？    
 </template> 
 </category> 
  
 <category> 
-<pattern>_ 爱 * 理 由 </pattern> 
+<pattern>_ 爱*理由</pattern>
 <template><srai><star/>爱<star/>理由<star/> 
 
 </srai></template> 
 </category> 
 
 <category> 
-<pattern>你 _ 做 家 务 *   </pattern> 
+<pattern>你_做家务*</pattern>
 <template> 西班牙用法律强制男人做家务，不错的建议哦~    
 </template> 
 </category> 
  
 <category> 
-<pattern>* 交 代 *   </pattern> 
+<pattern>*交代*</pattern>
 <template> 一定要交代！ 
 </template> 
 </category> 
 
 <category> 
-<pattern>_ 爱 情 *   </pattern> 
+<pattern>_ 爱情*</pattern>
 <template> 曾经有一份真诚的爱情放在我面前，我没有珍惜，等我
 
 失去的时候我才后悔莫及，人世间最痛苦的事莫过于此。    
@@ -69,25 +69,12 @@
 </category> 
  
 <category> 
-<pattern> 真 诚 * 爱 情 *   </pattern> 
+<pattern>真诚*爱情*</pattern>
 <template><srai><star/>真诚<star/>爱情<star/> 
 
 </srai></template> 
 </category> 
  
-<category> 
-<pattern>_ 真 诚 * 爱 情 </pattern> 
-<template><srai><star/>真诚<star/>爱情<star/> 
-
-</srai></template> 
-</category> 
- 
-<category> 
-<pattern> 真 诚 * 爱 情 </pattern> 
-<template><srai><star/>真诚<star/>爱情<star/> 
-
-</srai></template> 
-</category> 
 
 <category> 
 <pattern>* 两 人 * 粘 *   </pattern> 
@@ -95,15 +82,8 @@
 </template> 
 </category> 
 
- 
 <category> 
-<pattern>* 装 * 成 熟 *   </pattern> 
-<template> 呵呵，效果怎么样呀，不过现在的女生好像不吃这一套了。    
-</template> 
-</category>
-
-<category> 
-<pattern>* 同 学 * 聚 会 *   </pattern> 
+<pattern>同学聚会</pattern>
 <template> 蛮好的，吃饭飚歌，男生喝酒可多了    
 </template> 
 </category> 

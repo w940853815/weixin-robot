@@ -83,6 +83,8 @@ def verify_server():
                     content = '我暂时还不知道怎么回答你的问题，你可以来教我吗？请联系我q940853815'
                 else:
                     content = query.replay
+            else:
+                content = '我暂时还不知道怎么回答你的问题，你可以来教我吗？请联系我q940853815'
             replyMsg = Reply_TextMsg(to_user, from_user, content, rec_msg.MsgType, msg_id)
             replyMsg.insert_reply_db()
             return replyMsg.send()
