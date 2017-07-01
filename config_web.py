@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # coding=utf-8
 __author__ = 'ruidong.wang@tsingdata.com'
 
@@ -30,7 +29,7 @@ SECRET_KEY = 'you-will-never-guess'
 
 DATABASE_QUERY_TIMEOUT = 0.5
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
-SQLALCHEMY_DATABASE_URI = 'mysql://root:940wangrui@123.207.139.130:3306/weixin_robot'
+SQLALCHEMY_DATABASE_URI = 'mysql://[username]:[password]@[ip]:3306/weixin_robot'
 SQLALCHEMY_RECORD_QUERIES = True
 
 
@@ -69,8 +68,8 @@ BOT_PROPERTIES = {
 }
 
 #tuling机器人api key
-TULING_API_KEY = 'b74a80570b614b8d971a91b00ce027af'
+TULING_API_KEY = '[tuling机器人api]'
 
-WEI_XIN_TOKEN= 'wangruidong940853815'
-WEI_XIN_APP_ID = 'wxbf18978eec691e5e'
-WEI_XIN_APP_SECRET = '3cef339d6c263697dbf57d00f089a2a7'
+WEI_XIN_TOKEN= '[weixin_token]'
+WEI_XIN_APP_ID = '[weixin_app_id]'
+WEI_XIN_APP_SECRET = '[weixin_app_id_secret]'
