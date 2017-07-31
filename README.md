@@ -21,7 +21,7 @@ supervisord.conf是supervisor的配置文件，如何配置请参考网上教程
 
 ![image](https://github.com/w940853815/weixin-robot/blob/master/tmp/readme_img/QQ%E6%88%AA%E5%9B%BE20170701154618.png)
 
-- 后天管理界面
+- 后台管理界面
 
 ![image](https://github.com/w940853815/weixin-robot/blob/master/tmp/readme_img/QQ%E6%88%AA%E5%9B%BE20170701154744.png)
 
